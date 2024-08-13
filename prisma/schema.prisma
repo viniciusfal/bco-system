@@ -1,0 +1,44 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id String @id @default(uuid())
+  username String @unique
+  password String
+
+  @@map("users")
+}
+
+model Car {
+  id String @id @default(uuid())
+  plate String 
+  prefix String 
+
+  bcos Bco[] 
+
+
+  @@map("cars")
+}
+
+model Bco {
+  id String @id @default(uuid())
+  startRoullete Int
+  finalRoulette Int
+  startTime String
+  endTime String
+  line String
+  date DateTime
+
+  car Car @relation( fields: [car_id], references: [id])
+  car_id String
+
+  @@map("bcos")
+
+}
